@@ -1,0 +1,372 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>searchTwit</title>
+
+
+
+
+    <link rel = "stylesheet" type="text/css" href="{% static 'css/landing-page.css' %}">
+    <link rel = "stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel = "stylesheet" type="text/css" href="{% static 'css/datepicker.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" />
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script> -->
+
+
+</head>
+
+<body>
+
+
+    <header class="masthead text-white text-center">
+        <div class="container">
+
+  
+            <div class="row">
+                <div class="col-xl-9 mx-auto">
+                    <h1 class="mb-5">searchTwit</h1>
+                </div>
+                <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                    
+
+                    <!------------ form  ------------------>
+                    <form class="form" action="/" method="POST" > 
+                        <div class="form-row">
+                            <div class="md-form col-12 col-md-9 mb-2 mb-md-0">
+                                {% csrf_token %}
+                                <input type="text" name="busqueda" id="form"  class="form-control form-control-lg" >
+                                <label for="form" class="noselect"> Ingrese un elemento de búsqueda </label>
+                            </div>
+                            
+                            <div class="col-12 col-md-3">
+                                <button type="submit"  class="btn blue-gradient btn-rounded btn-sm my-0" >Buscar</button>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <!------------ botones  ------------------>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-primary"  type="button" onclick="myFunction()" id="busqueda_normal" disabled>
+                                Buscar información actual
+                            </button>
+
+                            <button class="btn btn-primary"  type="button" onclick="myFunction()" id="busqueda_fecha">
+                                Buscar por rango de fecha
+                            </button>
+                        </div>
+                        <!------------ botones  ------------------>    
+                        <div class="container" style="transform: translateY(20px); width: 500px">                        
+                            <!------------ filtros para la búsqueda normal  ------------------>
+                            <div id="normal" style="color:white; text-align:left">
+
+                                <div >Entregar resultados con polaridad:</div>
+                                
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="defaultInline1">
+                                    <label class="custom-control-label" for="defaultInline1">positiva</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="defaultInline2">
+                                    <label class="custom-control-label" for="defaultInline2">neutra</label>
+                                </div>
+
+                                <div class="custom-control custom-checkbox custom-control-inline">
+                                    <input type="checkbox" class="custom-control-input" id="defaultInline3">
+                                    <label class="custom-control-label" for="defaultInline3">negativa</label>
+                                </div>
+                            
+                            </div>
+                            <!------------ filtros para la búsqueda normal  ------------------>
+                            <!------------ filtros para la búsqueda por fecha  ------------------>
+                            
+                            <div id="fecha"  style="display: none; text-align:left">
+                                
+                                <div class="center"> Ingrese un rango de fecha. No puede ser mayor a 6 meses <hr> </div> 
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="md-form">
+                                            <!--The "from" Date Picker -->
+                                        
+                                            <input placeholder="Fecha inicial"  name="desde" type="text" id="startingDate" class="datepicker">
+                                            <label id="label_datepicker" for="startingDate">Desde</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="md-form" id="until">
+                                            <!--The "to" Date Picker -->
+                                            <input placeholder="Fecha final"  name="hasta" type="text" id="endingDate" class="datepicker">
+                                            <label id="label_datepicker" for="endingDate">Hasta</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+                            </div>
+
+                            <!------------ filtros para la búsqueda por fecha ------------------>
+                        </div>      
+                    </form> 
+                <!------------ form  ------------------>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <body style="background-color:#131742">
+
+        <div class="container">              
+            
+                <!-----------------------------------------   Busqueda Normal  ------------------------------------------>
+                {% if busqueda_fecha == 'off'%}
+                <ul class="collapsible">
+                    <li>
+                      <div style="color: black;" class="collapsible-header">Tweets</div>
+                      <div class="collapsible-body">
+                        <table class="table table-dark">
+                            <thead>
+                              <tr>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Tweet</th>
+                                <th scope="col">Número de Likes</th>
+                                <th scope="col">Link</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for d in data %}
+                                <tr>
+                                    {% for k, v in d.items %}
+                                        <td>{{v}}</td>
+                                    {% endfor %}
+                                </tr>
+                              {% endfor %}  
+                              
+                            </tbody>
+                          </table>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="collapsible-header">Tweets Positivos</div>
+                      <div class="collapsible-body">
+                        <table class="table table-dark">
+                            <thead>
+                              <tr>
+                                <th scope="col">Tweet</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for d in tweetsPositivos %}
+                                <tr>
+                                    
+                                        <td>{{d}}</td>
+                                    
+                                </tr>
+                              {% endfor %}  
+                              
+                            </tbody>
+                          </table>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="collapsible-header">Tweets Negativos</div>
+                      <div class="collapsible-body">
+                        <table class="table table-dark">
+                            <thead>
+                              <tr>
+                                <th scope="col">Tweet</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for d in tweetsNegativos %}
+                                <tr>
+                                    
+                                        <td>{{d}}</td>
+                                    
+                                </tr>
+                              {% endfor %}  
+                              
+                            </tbody>
+                          </table>
+                      </div>
+                    </li>
+                    <li>
+                        <div class="collapsible-header">Tweets Neutros</div>
+                        <div class="collapsible-body">
+                          <table class="table table-dark">
+                              <thead>
+                                <tr>
+                                  <th scope="col">Tweet</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for d in tweetsNeutross %}
+                                  <tr>
+                                      
+                                          <td>{{d}}</td>
+                                      
+                                  </tr>
+                                {% endfor %}  
+                                
+                              </tbody>
+                            </table>
+                        </div>
+                      </li>
+                  </ul>
+                
+                <div>
+                    <p>Término de búsqueda: {{termino}} </p>
+                    <p>Tweets extraídos: {{cantidad}} </p> 
+                </div>
+
+        
+                <div class="row">
+                
+                    <div class="col-xl-3 col-lg-6 mb-4" style="color:black">
+                    <div class="bg-white rounded-lg p-4 shadow">
+                        <h2 class="h6 font-weight-bold text-center mb-4">Tweets Negativos</h2>
+
+                            <h2 class="text-center">{{PorcentajeNegativos}}%</h2>
+
+                    </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-6 mb-4" style="color:black">
+                    <div class="bg-white rounded-lg p-4 shadow">
+                        <h2 class="h6 font-weight-bold text-center mb-4" >Tweets Neutros</h2>
+
+                            <h2 class="text-center">{{PorcentajeNeutros}}%</h2>
+
+                    </div>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-6 mb-4" style="color:black">
+                    <div class="bg-white rounded-lg p-4 shadow">
+                        <h2 class="h6 font-weight-bold text-center mb-4">Tweets Positivos</h2>
+
+                        <h2 class="text-center">{{PorcentajePositivos}}%</h2>
+
+                    </div>
+                    </div>
+
+                </div>
+            
+
+            <table style="width:100%">
+                <tr class="center">
+                    <th>Polaridad de los Tweets</th>
+                    <th>Wordcloud Tweets generales</th> 
+                </tr>
+                <tr>
+                    <td><img src="/media/polaridad.jpg" alt="polaridad" height="620" width="620"> </td>
+                    <td><img src="/media/wordcloudGeneral.jpg" alt="Wordcloud" height="620" width="620"></td>
+                </tr>
+                </table>
+
+                <br>
+
+                <table style="width:100%">
+                <tr>
+                    <th>Wordcloud Tweets negativos</th>
+                    <th>Wordcloud Tweets neutros</th> 
+                    <th>Wordcloud Tweets positivos</th>
+                </tr>
+                <tr>
+                    <td><img src="/media/tweetsNegativos.jpg" alt="tweetsNegativos" height="412" width="412"></td>
+                    <td><img src="/media/tweetsNeutros.jpg" alt="tweetsNeutros" height="412" width="412"></td>
+                    <td><img src="/media/tweetsPositivos.jpg" alt="tweetsPositivos" height="412" width="412"></td>
+                </tr>
+           </table>                                                     
+            <!-----------------------------------------   Busqueda Normal  ------------------------------------------>
+            <!-----------------------------------------   Busqueda por Fecha  ------------------------------------------>
+            {% elif  busqueda_fecha == 'on'%}
+            <ul class="collapsible">
+                <li>
+                <div style="color: black;" class="collapsible-header">Tweets</div>
+                <div class="collapsible-body">
+                <table class="table table-dark">
+                    <thead>
+                      <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Usuario</th>
+                        <!--<th scope="col">Nombre</th>-->
+                        <th scope="col">Tweet</th>
+                        <th scope="col">Número de Likes</th>
+                        <th scope="col">Link</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for d in data %}
+                        <tr>
+                            {% for k, v in d.items %}
+                                <td>{{v}}</td>
+                            {% endfor %}
+                        </tr>
+                      {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+                </li>
+            </ul>
+
+                <div>
+                    <p>Término de búsqueda:  {{termino}} </p>
+                </div>
+
+                    <div>
+                    <p>Intervalo de tiempo: {{desde}} > {{hasta}} </p>
+                </div>
+
+                <img src="/media/heatmap.jpg" alt="heatmapTweets" height="500" width=auto>
+            {% endif %}
+
+        </div>
+        <!-----------------------------------------   Busqueda por Fecha  ------------------------------------------>     
+
+
+    <script type="text/javascript" src="{% static "js/functions.js" %}"></script>
+
+
+
+
+
+{% comment %} --------------------------------------------------------------- {% endcomment %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/js/mdb.min.js"></script>
+    <script src="https://maxcdn..com/bootstrap/4.bootstrapcdn0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+    <div id="bottom"></div>
+    </body>
+    
+
+</html>
