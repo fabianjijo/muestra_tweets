@@ -1,0 +1,162 @@
+html {
+   scroll-behavior: smooth;
+ }
+
+/* Search Bar */
+input.form-control.form-control-lg:not(.browser-default){
+    transition: all 0.3s ease 0s;
+    color: white;
+    font-size: 1.5rem;
+}
+
+
+input.form-control.form-control-lg:hover{
+    border-bottom: 1px solid rgb(24, 180, 200);
+    border-width: 1.5px;
+}
+
+input.form-control.form-control-lg:hover + label{
+    color: rgb(24, 180, 200) !important;
+} 
+
+
+.md-form.col-12.col-md-9.mb-2.mb-md-0 label {
+    font-size: 17px;
+    color: rgb(202, 202, 202);
+    transform: translateX(6px);
+}
+
+
+.md-form.col-12.col-md-9.mb-2.mb-md-0 input.form-control.form-control-lg + label.active {
+    font-size: 13px;
+    color: rgb(155, 155, 155);
+    transform: translateY(-20px) translateX(5px);
+} 
+
+.md-form.col-12.col-md-9.mb-2.mb-md-0 input.form-control.form-control-lg:focus + label.active {
+    color: #4fcebd
+} 
+
+
+
+/*--------------------*/
+
+/* Search Button */
+.btn.blue-gradient.btn-rounded.btn-sm.my-0 {
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(50%);
+    height: 50%;
+    width: 100%;
+    filter: brightness(1);
+    font-size: 15px;
+    transition: all 0.3s ease 0s;
+}
+
+
+.btn.blue-gradient.btn-rounded.btn-sm.my-0:hover{
+    filter: brightness(0.9);
+}
+/* ------------------- */
+
+/* Group Buttons */
+.btn-group .btn{
+    border-radius: 20px;
+    text-transform: none;
+} 
+/* ------------------- */
+
+div#fecha div.center{
+    font-size: 1.2rem;
+}
+
+/* --- Date Picker --  */
+
+html {
+    overflow: visible !important;
+}
+
+
+label#label_datepicker {
+    color: rgb(173, 173, 173);
+    font-size: 1em;
+}
+
+
+.form-control.datepicker.picker__input.picker__input:hover {
+    background-color: rgba(251, 0, 0, 0.185);
+ }
+
+html .picker--opened .picker__holder{
+    height: 230%;
+    width: 300px;
+    transform: translateY(-10%) translateX(-20%);
+    overflow: visible;
+    background: rgba(255, 255, 255, 0.24);
+    position: absolute;
+ }
+ 
+html .picker--opened .picker__holder .picker__box{
+    overflow: hidden;
+    position: inherit;
+    height: 450px;
+    transform: translateY(25px) translateX(-40px);
+    width: 375px;
+    scale: 0.8;
+    color: #4285F4;
+    border: none;
+}
+
+
+html .picker--opened .picker__holder .picker__box .picker__date-display{
+    position: inherit;
+    bottom: 100%;
+    width: 100%;
+    height: 11%;
+    display: -webkit-inline-box;
+    background-color: #4285F4;
+}
+
+html .picker--opened .picker__holder .picker__box .picker__date-display .picker__year-display { /* año */
+  color: white;
+  margin-inline-end: 10px;
+}
+
+html .picker--opened .picker__holder .picker__box .picker__date-display .picker__weekday-display { /* dia de la semana */
+    display: contents;
+    font-size: 1.5rem;
+}
+html .picker--opened .picker__holder .picker__box .picker__date-display .picker__month-display { /* mes */
+    font-size: 1.5rem;
+}
+html .picker--opened .picker__holder .picker__box .picker__date-display .picker__day-display { /* numero del dia */
+    font-size: 1.5rem;
+}
+
+
+html .picker--opened .picker__holder .picker__box .picker__container__wrapper{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 218px;
+    background-color:white;
+    transform: translateY(-181px);
+}
+
+html .picker--opened .picker__holder .picker__box .picker__container__wrapper .picker__footer{
+    transform: translateY(-20px);
+    display: table-row;
+    color: #4285F4;
+}
+
+.picker__container__wrapper .picker__calendar-container table.picker__table tbody tr td .picker__day{
+    font-size: 15px;
+}
+
+.picker__container__wrapper .picker__calendar-container table.picker__table tbody tr td .picker__day--selected{
+    background-color: #4285F4;
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.6);
+}
+/*
