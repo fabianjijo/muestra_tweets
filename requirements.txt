@@ -25,7 +25,7 @@ dash-renderer==1.2.4
 dash-table==4.6.0
 decorator==4.4.1
 defusedxml==0.6.0
-Django==2.2.6
+Django==2.2.22
 django-bootstrap4==1.1.1
 dpd-components==0.1.0
 elasticsearch==7.0.5
